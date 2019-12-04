@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -37,9 +38,55 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+player = Player("Obaida", "outside")
+
+def search(myDict, lookup):
+    for key, value in myDict.items():
+        if key in lookup:
+            return key
+
+def dry(direction):
+    direction=search(room, direction)
+    print("\n")
+    print(f"Current Room: {direction} \n")
+    print(f"Description of Room: {room[direction].description}\n")   
+    player.room=direction
+        
+
 # Make a new player object that is currently in the 'outside' room.
 
+user = str(input("[n] North  [e] East  [s] South [w] West [q] Quit\n"))
 # Write a loop that:
+while user!="q":
+    if user=="n":
+        try:
+            direction=str(room[player.room].n_to.name).lower()
+            dry(direction)
+        except:
+             print("No room exists in that location. Wrong move.")
+        
+    elif user=="e":
+        try:
+            direction=str(room[player.room].e_to.name).lower()
+            dry(direction)
+        except:
+             print("No room exists in that location. Wrong move.") 
+    elif user=="s":
+        try:
+            direction=str(room[player.room].s_to.name).lower()
+            dry(direction)
+        except:
+            print("No room exists in that location. Wrong move.")
+    elif user=="w":
+        try:
+            direction=str(room[player.room].w_to.name).lower()
+            dry(direction)
+        except:
+             print("No room exists in that location. Wrong move.")
+    user = str(input("[n] North  [e] East  [s] South [w] West [q] Quit\n"))
+       
+
+
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
