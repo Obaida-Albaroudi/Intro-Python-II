@@ -39,6 +39,11 @@ room['treasure'].s_to = room['narrow']
 #
 
 player = Player("Obaida", "outside")
+player.add_items("flashlight","Used to help light up the passage ways.")
+player.add_items("flashlight","Used to help light up the passage ways.")
+# print(player.__repr__())
+# for i in player.items:
+#     print(i)
 
 def search(myDict, lookup):
     for key, value in myDict.items():
