@@ -2,17 +2,21 @@
 # description attributes.
 from item import Item
 
-class Room:
+class Room(Item):
     def __init__(self, name, description):
          self.name=name
          self.description=description
-         self.itemss=[]
+         self.items=[]
 
     def add_items(self,name, description):
-        self.itemss.append(Item(name, description))
+        self.items.append(Item(name, description))
     
-    # def drop_items(self, name):
-    #     for key, value in items.items():
-    #         if name in key:
-    #         return key
+    def remove_items(self,name):
+        for i in self.items:
+            if i.name==name:
+                print("test")
+                self.items.remove(i)
 
+    def __repr__(self):
+        for i in self.items:
+            print(f"{i.name} {i.description}")

@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -40,8 +41,13 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("Obaida", "outside")
 player.add_items("flashlight","Used to help light up the passage ways.")
-player.add_items("flashlight","Used to help light up the passage ways.")
-# print(player.__repr__())
+player.add_items("wow","Used to help light up the passage ways.")
+room['outside'].add_items("Rocks", "rocks can be found all over the ground")
+room['foyer'].add_items("light filters", "unique type of flashlights")
+room['foyer'].add_items("Wooo", "unique type of flashlights")
+room['treasure'].add_items("treasure", "All the gold to make you rich")
+
+
 # for i in player.items:
 #     print(i)
 
@@ -50,17 +56,26 @@ def search(myDict, lookup):
         if key in lookup:
             return key
 
+def grab(direction):
+    for inven in room[direction].items:
+        move = str(input(f"[Take] {inven.name} []Do Nothing [b] Back\n"))
+        if move=="Take":
+            room[direction].remove_items(str(inven.name))
+            player.add_items(str(inven.name), str(inven.description))
+            player.on_take(str(inven.name))
+            continue
+
 def dry(direction):
     direction=search(room, direction)
     print("\n")
     print(f"Current Room: {direction} \n")
-    print(f"Description of Room: {room[direction].description}\n")   
+    print(f"Description of Room: {room[direction].description}\n")  
+    grab(direction) 
     player.room=direction
-        
 
 # Make a new player object that is currently in the 'outside' room.
 
-user = str(input("[n] North  [e] East  [s] South [w] West [q] Quit\n"))
+user = str(input("[n] North  [e] East  [s] South [w] West [i]Player Inventory [q] Quit\n"))
 # Write a loop that:
 while user!="q":
     if user=="n":
@@ -68,8 +83,7 @@ while user!="q":
             direction=str(room[player.room].n_to.name).lower()
             dry(direction)
         except:
-             print("No room exists in that location. Wrong move.")
-        
+             print("No room exists in that location. Wrong move.")    
     elif user=="e":
         try:
             direction=str(room[player.room].e_to.name).lower()
@@ -88,7 +102,16 @@ while user!="q":
             dry(direction)
         except:
              print("No room exists in that location. Wrong move.")
-    user = str(input("[n] North  [e] East  [s] South [w] West [q] Quit\n"))
+    elif user=="i":
+        for inven in player.items:
+            move = str(input(f"[Remove] {inven.name} []Do Nothing [b] Back\n"))
+            if move=="Remove":
+                player.on_drop(str(inven.name))
+                player.remove_items(str(inven.name))
+                continue
+                
+        
+    user = str(input("[n] North  [e] East  [s] South [w] West [i]Player Inventory [q] Quit\n"))
        
 
 
