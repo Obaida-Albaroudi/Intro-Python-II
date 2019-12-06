@@ -68,7 +68,7 @@ def grab(direction):
 def dry(direction):
     direction=search(room, direction)
     print("\n")
-    print(f"Current Room: {direction} \n")
+    print(f"Current Room: {room[direction].name} \n")
     print(f"Description of Room: {room[direction].description}\n")  
     grab(direction) 
     player.room=direction
